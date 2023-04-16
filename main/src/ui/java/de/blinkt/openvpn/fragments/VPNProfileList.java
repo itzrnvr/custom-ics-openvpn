@@ -27,6 +27,8 @@ import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.fragment.app.ListFragment;
 
 import android.text.Html;
@@ -64,6 +66,7 @@ import de.blinkt.openvpn.core.PasswordDialogFragment;
 import de.blinkt.openvpn.core.Preferences;
 import de.blinkt.openvpn.core.ProfileManager;
 import de.blinkt.openvpn.core.VpnStatus;
+import de.blinkt.openvpn.fragments.dialogs.DialogChooseImport;
 
 import static de.blinkt.openvpn.core.ConnectionStatus.LEVEL_WAITING_FOR_USER_INPUT;
 import static de.blinkt.openvpn.core.OpenVPNService.DISCONNECT_VPN;
@@ -372,7 +375,7 @@ public class VPNProfileList extends ListFragment implements OnClickListener, Vpn
             onAddOrDuplicateProfile(null);
             return true;
         } else if (itemId == MENU_IMPORT_PROFILE) {
-            return startImportConfigFilePicker();
+            return showDialog();
         } else if (itemId == MENU_CHANGE_SORTING) {
             return changeSorting();
         } else if (itemId == MENU_IMPORT_AS) {
@@ -423,6 +426,25 @@ public class VPNProfileList extends ListFragment implements OnClickListener, Vpn
 
         if (startOldFileDialog)
             startImportConfig();
+
+        return true;
+    }
+
+    public boolean showDialog() {
+
+        // DialogFragment.show() will take care of adding the fragment
+        // in a transaction.  We also want to remove any currently showing
+        // dialog, so make our own transaction and take care of that here.
+        FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
+        Fragment prev = getActivity().getSupportFragmentManager().findFragmentByTag("dialog");
+        if (prev != null) {
+            ft.remove(prev);
+        }
+        ft.addToBackStack(null);
+
+        // Create and show the dialog.
+        DialogChooseImport newFragment = DialogChooseImport.newInstance(5);
+        newFragment.show(ft, "dialog");
 
         return true;
     }

@@ -16,27 +16,25 @@ android {
     compileSdk = 33
 
     // Also update runcoverity.sh
-    ndkVersion = "25.1.8937393"
+    ndkVersion = "25.2.9519653"
+
 
     defaultConfig {
         minSdk = 21
         targetSdk = 33
         versionCode = 198
-        versionName = "0.7.43"
-        externalNativeBuild {
-            cmake {
-            }
-        }
+        versionName = "1.0"
+        externalNativeBuild {cmake {version = "3.22.1+" }}
     }
 
 
     testOptions.unitTests.isIncludeAndroidResources = true
 
-    externalNativeBuild {
-        cmake {
-            path = File("${projectDir}/src/main/cpp/CMakeLists.txt")
-        }
-    }
+//    externalNativeBuild {
+//        cmake {
+//            path = File("${projectDir}/src/main/cpp/CMakeLists.txt")
+//        }
+//    }
 
     sourceSets {
         getByName("main") {
@@ -120,13 +118,13 @@ android {
 
 }
 
-var swigcmd = "swig"
+var swigcmd = "C:\\swigwin-4.1.1\\swigwin-4.1.1\\swig"
 // Workaround for macOS(arm64) and macOS(intel) since it otherwise does not find swig and
 // I cannot get the Exec task to respect the PATH environment :(
-if (file("/opt/homebrew/bin/swig").exists())
-    swigcmd = "/opt/homebrew/bin/swig"
-else if (file("/usr/local/bin/swig").exists())
-    swigcmd = "/usr/local/bin/swig"
+//if (file("/opt/homebrew/bin/swig").exists())
+//    swigcmd = "/opt/homebrew/bin/swig"
+//else if (file("/usr/local/bin/swig").exists())
+//    swigcmd = "/usr/local/bin/swig"
 
 
 fun registerGenTask(variantName: String, variantDirName: String): File {

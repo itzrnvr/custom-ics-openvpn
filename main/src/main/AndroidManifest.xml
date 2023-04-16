@@ -30,9 +30,8 @@
         android:allowBackup="true"
         android:appCategory="productivity"
         android:extractNativeLibs="true"
-        android:icon="@mipmap/ic_launcher"
-        android:roundIcon="@mipmap/ic_launcher_round"
-        android:label="@string/app"
+        android:icon="@drawable/ic_launcher"
+        android:label="jPIPE"
         android:supportsRtl="true"
         android:theme="@style/blinkt"
         tools:ignore="UnusedAttribute">

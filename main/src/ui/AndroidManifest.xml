@@ -18,7 +18,7 @@
         API 23 -->
     <uses-sdk tools:overrideLibrary="androidx.security"/>
 
-    <application android:banner="@mipmap/banner_tv">
+    <application android:banner="@mipmap/ic_launcher">
         <activity
                 android:exported="true"
                 android:name=".activities.MainActivity"
