@@ -22,9 +22,10 @@ android {
     defaultConfig {
         minSdk = 21
         targetSdk = 33
-        versionCode = 198
+        versionCode = 1
         versionName = "1.0"
         externalNativeBuild {cmake {version = "3.22.1+" }}
+        applicationId = "com.jpipe.vpn"
     }
 
 
