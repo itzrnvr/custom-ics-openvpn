@@ -22,11 +22,14 @@ import androidx.fragment.app.DialogFragment;
 import de.blinkt.openvpn.R;
 import de.blinkt.openvpn.activities.FileSelect;
 import de.blinkt.openvpn.fragments.Utils;
+import de.blinkt.openvpn.fragments.VPNProfileList;
 
 public class DialogChooseImport extends DialogFragment {
     int mNum;
     private static final int FILE_PICKER_RESULT_KITKAT = 392;
     private static final int SELECT_PROFILE = 43;
+
+    private VPNProfileList vpnProfileList;
 
     // Create a new instance of MyDialogFragment, providing "num" as an argument.
     public static DialogChooseImport newInstance(int num) {
@@ -36,6 +39,7 @@ public class DialogChooseImport extends DialogFragment {
         Bundle args = new Bundle();
         args.putInt("num", num);
         f.setArguments(args);
+
 
         return f;
     }
@@ -84,7 +88,8 @@ public class DialogChooseImport extends DialogFragment {
         btnImportOne.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startOVPNPicker();
+                vpnProfileList.startImportConfigFilePicker();
+                dismiss();
             }
         });
 
@@ -92,37 +97,13 @@ public class DialogChooseImport extends DialogFragment {
             @Override
             public void onClick(View view) {
                 Toast.makeText(getContext(), "Work in progress!", Toast.LENGTH_LONG).show();
+                dismiss();
             }
         });
 
     }
 
-    public void startOVPNPicker(){
-        boolean startOldFileDialog = true;
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT && !Utils.alwaysUseOldFileChooser(getActivity()))
-            startOldFileDialog = !startFilePicker();
-
-        if (startOldFileDialog)
-            startImportConfig();
+    public void setVpnProfileList(VPNProfileList vpnProfileList) {
+        this.vpnProfileList = vpnProfileList;
     }
-
-
-    @TargetApi(Build.VERSION_CODES.KITKAT)
-    private boolean startFilePicker() {
-
-        Intent i = Utils.getFilePickerIntent(getActivity(), Utils.FileType.OVPN_CONFIG);
-        if (i != null) {
-            startActivityForResult(i, FILE_PICKER_RESULT_KITKAT);
-            return true;
-        } else
-            return false;
-    }
-
-    private void startImportConfig() {
-        Intent intent = new Intent(getActivity(), FileSelect.class);
-        intent.putExtra(FileSelect.NO_INLINE_SELECTION, true);
-        intent.putExtra(FileSelect.WINDOW_TITLE, R.string.import_configuration_file);
-        startActivityForResult(intent, SELECT_PROFILE);
-    }
-
 }

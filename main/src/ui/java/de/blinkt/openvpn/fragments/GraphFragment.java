@@ -22,6 +22,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 
 import com.github.mikephil.charting.charts.LineChart;
 import com.github.mikephil.charting.components.XAxis;
@@ -41,6 +42,7 @@ import de.blinkt.openvpn.R;
 import de.blinkt.openvpn.core.OpenVPNManagement;
 import de.blinkt.openvpn.core.TrafficHistory;
 import de.blinkt.openvpn.core.VpnStatus;
+import de.blinkt.openvpn.fragments.dialogs.DialogChooseImport;
 
 import static android.content.Context.MODE_PRIVATE;
 import static de.blinkt.openvpn.core.OpenVPNService.humanReadableByteCount;
@@ -57,8 +59,10 @@ public class GraphFragment extends Fragment implements VpnStatus.ByteCountListen
     private ChartDataAdapter mChartAdapter;
     private int mColourIn;
     private int mColourOut;
+
     private int mColourPoint;
     private int mTextColour;
+    private int mNoDataTextColour;
 
     private long firstTs;
     private TextView mSpeedStatus;
@@ -90,6 +94,7 @@ public class GraphFragment extends Fragment implements VpnStatus.ByteCountListen
 
         mColourIn = getActivity().getResources().getColor(R.color.dataIn);
         mColourOut = getActivity().getResources().getColor(R.color.dataOut);
+        mNoDataTextColour = getActivity().getResources().getColor(R.color.accent);
         mColourPoint = getActivity().getResources().getColor(android.R.color.black);
 
         int currentNightMode = getResources().getConfiguration().uiMode & Configuration.UI_MODE_NIGHT_MASK;
@@ -274,12 +279,14 @@ public class GraphFragment extends Fragment implements VpnStatus.ByteCountListen
                 holder.chart.setData(data);
 
             holder.chart.setNoDataText(getString(R.string.notenoughdata));
+            holder.chart.setNoDataTextColor(mNoDataTextColour);
 
             holder.chart.invalidate();
             //holder.chart.animateX(750);
 
             return convertView;
         }
+
 
         private LineData getDataSet(int timeperiod) {
 

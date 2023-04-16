@@ -1,8 +1,3 @@
-/*
- * Copyright (c) 2012-2019 Arne Schwabe
- * Distributed under the GNU GPL v2 with additional terms. For full terms see the file doc/LICENSE.txt
- */
-
 package de.blinkt.openvpn.fragments;
 
 import android.Manifest;
@@ -419,17 +414,6 @@ public class VPNProfileList extends ListFragment implements OnClickListener, Vpn
         }
     }
 
-    private boolean startImportConfigFilePicker() {
-        boolean startOldFileDialog = true;
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT && !Utils.alwaysUseOldFileChooser(getActivity()))
-            startOldFileDialog = !startFilePicker();
-
-        if (startOldFileDialog)
-            startImportConfig();
-
-        return true;
-    }
-
     public boolean showDialog() {
 
         // DialogFragment.show() will take care of adding the fragment
@@ -444,7 +428,20 @@ public class VPNProfileList extends ListFragment implements OnClickListener, Vpn
 
         // Create and show the dialog.
         DialogChooseImport newFragment = DialogChooseImport.newInstance(5);
+        newFragment.setVpnProfileList(this);
         newFragment.show(ft, "dialog");
+
+        return true;
+    }
+
+
+    public boolean startImportConfigFilePicker() {
+        boolean startOldFileDialog = true;
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT && !Utils.alwaysUseOldFileChooser(getActivity()))
+            startOldFileDialog = !startFilePicker();
+
+        if (startOldFileDialog)
+            startImportConfig();
 
         return true;
     }
