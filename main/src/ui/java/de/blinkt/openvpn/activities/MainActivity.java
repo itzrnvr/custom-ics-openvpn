@@ -64,7 +64,7 @@ public class MainActivity extends BaseActivity {
         if (isAndroidTV())
             mPagerAdapter.addTab(R.string.openvpn_log, LogFragment.class);
 
-//        mPagerAdapter.addTab(R.string.about, AboutFragment.class);
+        mPagerAdapter.addTab(R.string.about, AboutFragment.class);
         mPager.setAdapter(mPagerAdapter);
     }
 

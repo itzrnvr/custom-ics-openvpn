@@ -16,26 +16,28 @@ android {
     compileSdk = 33
 
     // Also update runcoverity.sh
-    ndkVersion = "25.2.9519653"
-
+    ndkVersion = "25.1.8937393"
 
     defaultConfig {
         minSdk = 21
         targetSdk = 33
         versionCode = 1
         versionName = "1.0"
-        externalNativeBuild {cmake {version = "3.22.1+" }}
+        externalNativeBuild {
+            cmake {
+            }
+        }
         applicationId = "com.jpipe.vpn"
     }
 
 
     testOptions.unitTests.isIncludeAndroidResources = true
 
-//    externalNativeBuild {
-//        cmake {
-//            path = File("${projectDir}/src/main/cpp/CMakeLists.txt")
-//        }
-//    }
+    externalNativeBuild {
+        cmake {
+            path = File("${projectDir}/src/main/cpp/CMakeLists.txt")
+        }
+    }
 
     sourceSets {
         getByName("main") {
@@ -119,13 +121,13 @@ android {
 
 }
 
-var swigcmd = "C:\\swigwin-4.1.1\\swigwin-4.1.1\\swig"
+var swigcmd = "swig"
 // Workaround for macOS(arm64) and macOS(intel) since it otherwise does not find swig and
 // I cannot get the Exec task to respect the PATH environment :(
-//if (file("/opt/homebrew/bin/swig").exists())
-//    swigcmd = "/opt/homebrew/bin/swig"
-//else if (file("/usr/local/bin/swig").exists())
-//    swigcmd = "/usr/local/bin/swig"
+if (file("/opt/homebrew/bin/swig").exists())
+    swigcmd = "/opt/homebrew/bin/swig"
+else if (file("/usr/local/bin/swig").exists())
+    swigcmd = "/usr/local/bin/swig"
 
 
 fun registerGenTask(variantName: String, variantDirName: String): File {
@@ -139,10 +141,10 @@ fun registerGenTask(variantName: String, variantDirName: String): File {
             mkdir(genDir)
         }
         commandLine(listOf(swigcmd, "-outdir", genDir, "-outcurrentdir", "-c++", "-java", "-package", "net.openvpn.ovpn3",
-                "-Isrc/main/cpp/openvpn3/client", "-Isrc/main/cpp/openvpn3/",
-                "-DOPENVPN_PLATFORM_ANDROID",
-                "-o", "${genDir}/ovpncli_wrap.cxx", "-oh", "${genDir}/ovpncli_wrap.h",
-                "src/main/cpp/openvpn3/client/ovpncli.i"))
+            "-Isrc/main/cpp/openvpn3/client", "-Isrc/main/cpp/openvpn3/",
+            "-DOPENVPN_PLATFORM_ANDROID",
+            "-o", "${genDir}/ovpncli_wrap.cxx", "-oh", "${genDir}/ovpncli_wrap.h",
+            "src/main/cpp/openvpn3/client/ovpncli.i"))
         inputs.files( "src/main/cpp/openvpn3/client/ovpncli.i")
         outputs.dir( genDir)
 
