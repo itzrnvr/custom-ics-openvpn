@@ -67,7 +67,7 @@ public class AboutFragment extends Fragment implements View.OnClickListener {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.about, container, false);
-        TextView ver = (TextView) v.findViewById(R.id.version);
+//        TextView ver = (TextView) v.findViewById(R.id.version);
 
         String version;
         String name = "Openvpn";
@@ -79,26 +79,26 @@ public class AboutFragment extends Fragment implements View.OnClickListener {
             version = "error fetching version";
         }
 
-        ver.setText(getString(R.string.version_info, name, version));
+//        ver.setText(getString(R.string.version_info, name, version));
 
         TextView verO2 = v.findViewById(R.id.version_ovpn2);
         TextView verO3 = v.findViewById(R.id.version_ovpn3);
         TextView osslVer = v.findViewById(R.id.openssl_version);
 
-//        verO2.setText(String.format(Locale.US, "OpenVPN version: %s", NativeUtils.getOpenVPN2GitVersion()));
-//        verO3.setText(String.format(Locale.US, "OpenVPN3 core version: %s", NativeUtils.getOpenVPN3GitVersion()));
-//        osslVer.setText(String.format(Locale.US, "OpenSSL version: %s", NativeUtils.getOpenSSLVersion()));
+        verO2.setText(String.format(Locale.US, "OpenVPN version: %s", NativeUtils.getOpenVPN2GitVersion()));
+        verO3.setText(String.format(Locale.US, "OpenVPN3 core version: %s", NativeUtils.getOpenVPN3GitVersion()));
+        osslVer.setText(String.format(Locale.US, "OpenSSL version: %s", NativeUtils.getOpenSSLVersion()));
 
 
 
         /* recreating view without onCreate/onDestroy cycle */
-        TextView translation = (TextView) v.findViewById(R.id.translation);
+//        TextView translation = (TextView) v.findViewById(id.translation);
 
-        // Don't print a text for myself
-        if (getString(R.string.translationby).contains("Arne Schwabe"))
-            translation.setText("");
-        else
-            translation.setText(R.string.translationby);
+//        // Don't print a text for myself
+//        if (getString(R.string.translationby).contains("Arne Schwabe"))
+//            translation.setText("");
+//        else
+//            translation.setText(R.string.translationby);
 
         TextView wv = (TextView) v.findViewById(R.id.full_licenses);
         wv.setText(Html.fromHtml(readHtmlFromAssets()));

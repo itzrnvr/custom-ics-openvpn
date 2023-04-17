@@ -16,15 +16,15 @@
             android:layout_height="match_parent">
 
         <com.google.android.material.tabs.TabLayout
-                android:id="@+id/tab_layout"
-                style="@style/blinkt.tabLayout"
-                app:tabGravity="center"
-                app:tabMaxWidth="0dp"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-            
+            android:id="@+id/tab_layout"
+            style="@style/blinkt.tabLayout"
+            app:tabMaxWidth="0dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="top"
+            app:tabMode="scrollable"
 
-                />
+            />
 
     </androidx.viewpager.widget.ViewPager>
 
