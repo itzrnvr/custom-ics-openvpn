@@ -27,9 +27,11 @@ public class BundleReader {
         this.context = context;
     }
 
-    public void extract(Uri uri, String password) throws ZipException {
+    public File[] extract(Uri uri, String password) throws ZipException {
 
 
+        File[] files = null;
+        String destination = null;
 
         String source = RealPaths.getRealPathFromURI(uri, context);
         Toast.makeText(context, source, Toast.LENGTH_LONG).show();
@@ -43,22 +45,19 @@ public class BundleReader {
 
             File outFile = new File(context.getExternalFilesDir(null).getParent(),folderName);
             outFile.mkdirs();
-            String destination = outFile.getAbsolutePath();
+            destination = outFile.getAbsolutePath();
+
             zipFile.extractAll(destination);
-            loadProfiles(destination);
             Toast.makeText(context, destination, Toast.LENGTH_LONG).show();
         } catch (ZipException e) {
             e.printStackTrace();
         }
 
+        return loadProfiles(destination);
     }
 
-    public void loadProfiles(String source){
+    private File[] loadProfiles(String source){
         File yourDir = new File(source);
-        for (File f: Objects.requireNonNull(yourDir.listFiles())) {
-            if (f.isFile()){
-                Log.d("ExtractedFile", f.getName());
-            }
-        }
+        return yourDir.listFiles();
     }
 }

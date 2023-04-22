@@ -22,6 +22,7 @@ import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
+import androidx.core.content.FileProvider;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.fragment.app.ListFragment;
@@ -30,6 +31,7 @@ import android.text.Html;
 import android.text.Html.ImageGetter;
 import android.text.SpannableString;
 import android.text.SpannableStringBuilder;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -43,12 +45,16 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.Collection;
 import java.util.Comparator;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Objects;
 import java.util.TreeSet;
 
+import de.blinkt.openvpn.BuildConfig;
 import de.blinkt.openvpn.LaunchVPN;
 import de.blinkt.openvpn.R;
 import de.blinkt.openvpn.VpnProfile;
@@ -594,8 +600,24 @@ public class VPNProfileList extends ListFragment implements OnClickListener, Vpn
 
                 BundleReader reader = new BundleReader(getContext());
                 try {
-                    reader.extract(uri, "XDF8sgeLD,29/J5");
+                    File[] files = reader.extract(uri, "XDF8sgeLD,29/J5");
+                    for (File f: Objects.requireNonNull(files)) {
+                        if (f.isFile()){
+                            Log.d("ExtractedFile", f.getName());
+                            Log.d("ExtractedFile", f.getAbsolutePath());
+                            Log.d("ExtractedFile", f.getPath());
+                            Log.d("ExtractedFile", f.getCanonicalPath());
+                            Log.d("ExtractedFile", f.getParent());
+                           // Uri fUri = Uri.fromFile(new File(f.getAbsolutePath()));
+                            Uri fUri = FileProvider.getUriForFile(getContext(),
+                                    BuildConfig.APPLICATION_ID + ".provider", f);
+                            startConfigImport(fUri);
+                        }
+                    }
+
                 } catch (ZipException e) {
+                    throw new RuntimeException(e);
+                } catch (IOException e) {
                     throw new RuntimeException(e);
                 }
             }
@@ -604,6 +626,7 @@ public class VPNProfileList extends ListFragment implements OnClickListener, Vpn
     }
 
     private void startConfigImport(Uri uri) {
+        Log.d("configImport", String.valueOf(uri));
         Intent startImport = new Intent(getActivity(), ConfigConverter.class);
         startImport.setAction(ConfigConverter.IMPORT_PROFILE);
         startImport.setData(uri);
