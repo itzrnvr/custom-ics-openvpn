@@ -112,7 +112,10 @@ public class ProfileManager {
         if (encryptionBroken)
             preferEncryption = false;
 
-        profile.mVersion += 1;
+        if(profile != null){
+            profile.mVersion += 1;
+        }
+
         ObjectOutputStream vpnFile;
 
         String filename = profile.getUUID().toString();
