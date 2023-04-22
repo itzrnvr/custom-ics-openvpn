@@ -266,6 +266,12 @@ public class OpenVPNService extends VpnService implements StateListener, Callbac
         nbuilder.setOngoing(true);
 
         nbuilder.setSmallIcon(icon);
+        if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            nbuilder.setSmallIcon(R.drawable.baseline_vpn_key_24);
+            nbuilder.setColor(getResources().getColor(R.color.accent));
+        } else {
+            nbuilder.setSmallIcon(icon);
+        }
         if (status == LEVEL_WAITING_FOR_USER_INPUT) {
             PendingIntent pIntent = PendingIntent.getActivity(this, 0, intent, PendingIntent.FLAG_IMMUTABLE);
             nbuilder.setContentIntent(pIntent);
@@ -336,25 +342,26 @@ public class OpenVPNService extends VpnService implements StateListener, Callbac
     }
 
     private int getIconByConnectionStatus(ConnectionStatus level) {
-        switch (level) {
-            case LEVEL_CONNECTED:
-                return R.drawable.ic_stat_vpn;
-            case LEVEL_AUTH_FAILED:
-            case LEVEL_NONETWORK:
-            case LEVEL_NOTCONNECTED:
-                return R.drawable.ic_stat_vpn_offline;
-            case LEVEL_CONNECTING_NO_SERVER_REPLY_YET:
-            case LEVEL_WAITING_FOR_USER_INPUT:
-                return R.drawable.ic_stat_vpn_outline;
-            case LEVEL_CONNECTING_SERVER_REPLIED:
-                return R.drawable.ic_stat_vpn_empty_halo;
-            case LEVEL_VPNPAUSED:
-                return android.R.drawable.ic_media_pause;
-            case UNKNOWN_LEVEL:
-            default:
-                return R.drawable.ic_stat_vpn;
+//        switch (level) {
+//            case LEVEL_CONNECTED:
+//                return R.drawable.ic_stat_vpn;
+//            case LEVEL_AUTH_FAILED:
+//            case LEVEL_NONETWORK:
+//            case LEVEL_NOTCONNECTED:
+//                return R.drawable.ic_stat_vpn_offline;
+//            case LEVEL_CONNECTING_NO_SERVER_REPLY_YET:
+//            case LEVEL_WAITING_FOR_USER_INPUT:
+//                return R.drawable.ic_stat_vpn_outline;
+//            case LEVEL_CONNECTING_SERVER_REPLIED:
+//                return R.drawable.ic_stat_vpn_empty_halo;
+//            case LEVEL_VPNPAUSED:
+//                return android.R.drawable.ic_media_pause;
+//            case UNKNOWN_LEVEL:
+//            default:
+//                return R.drawable.ic_stat_vpn;
+//    }
 
-        }
+        return R.drawable.ic_launcher;
     }
 
     private void jbNotificationExtras(int priority,

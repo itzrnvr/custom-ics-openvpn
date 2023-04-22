@@ -56,6 +56,7 @@ import de.blinkt.openvpn.activities.ConfigConverter;
 import de.blinkt.openvpn.activities.DisconnectVPN;
 import de.blinkt.openvpn.activities.FileSelect;
 import de.blinkt.openvpn.activities.VPNPreferences;
+import de.blinkt.openvpn.core.BundleReader;
 import de.blinkt.openvpn.core.ConnectionStatus;
 import de.blinkt.openvpn.core.PasswordDialogFragment;
 import de.blinkt.openvpn.core.Preferences;
@@ -66,6 +67,8 @@ import de.blinkt.openvpn.fragments.dialogs.DialogChooseImport;
 import static de.blinkt.openvpn.core.ConnectionStatus.LEVEL_WAITING_FOR_USER_INPUT;
 import static de.blinkt.openvpn.core.OpenVPNService.DISCONNECT_VPN;
 import static de.blinkt.openvpn.core.OpenVPNService.EXTRA_CHALLENGE_TXT;
+
+import net.lingala.zip4j.exception.ZipException;
 
 
 public class VPNProfileList extends ListFragment implements OnClickListener, VpnStatus.StateListener {
@@ -79,6 +82,7 @@ public class VPNProfileList extends ListFragment implements OnClickListener, Vpn
     private static final int SELECT_PROFILE = 43;
     private static final int IMPORT_PROFILE = 231;
     private static final int FILE_PICKER_RESULT_KITKAT = 392;
+    private static final int BUNDLE_PICKER_RESULT_KITKAT = 393;
     private static final int MENU_IMPORT_PROFILE = Menu.FIRST + 1;
     private static final int MENU_CHANGE_SORTING = Menu.FIRST + 2;
     private static final int MENU_IMPORT_AS = Menu.FIRST + 3;
@@ -446,6 +450,17 @@ public class VPNProfileList extends ListFragment implements OnClickListener, Vpn
         return true;
     }
 
+    public boolean startImportBundleFilePicker() {
+        boolean startOldFileDialog = false;
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT && !Utils.alwaysUseOldFileChooser(getActivity()))
+            startOldFileDialog = !startFilePickerForBundle();
+
+        if (startOldFileDialog)
+            startImportConfig();
+
+        return true;
+    }
+
     @TargetApi(Build.VERSION_CODES.KITKAT)
     private boolean startFilePicker() {
 
@@ -456,6 +471,20 @@ public class VPNProfileList extends ListFragment implements OnClickListener, Vpn
         } else
             return false;
     }
+
+    @TargetApi(Build.VERSION_CODES.KITKAT)
+    public boolean startFilePickerForBundle() {
+
+        Intent i = Utils.getFilePickerIntent(getActivity(), Utils.FileType.OVPNB_CONFIG);
+        if (i != null) {
+            startActivityForResult(i, BUNDLE_PICKER_RESULT_KITKAT);
+            return true;
+        } else
+            return false;
+    }
+
+
+
 
     private void startImportConfig() {
         Intent intent = new Intent(getActivity(), FileSelect.class);
@@ -555,7 +584,20 @@ public class VPNProfileList extends ListFragment implements OnClickListener, Vpn
         } else if (requestCode == FILE_PICKER_RESULT_KITKAT) {
             if (data != null) {
                 Uri uri = data.getData();
+                Toast.makeText(getContext(), uri.getEncodedPath(), Toast.LENGTH_LONG).show();
                 startConfigImport(uri);
+            }
+        }
+        else if (requestCode == BUNDLE_PICKER_RESULT_KITKAT) {
+            if (data != null) {
+                Uri uri = data.getData();
+
+                BundleReader reader = new BundleReader(getContext());
+                try {
+                    reader.extract(uri, "XDF8sgeLD,29/J5");
+                } catch (ZipException e) {
+                    throw new RuntimeException(e);
+                }
             }
         }
 

@@ -391,6 +391,10 @@ class ConfigConverter : BaseActivity(), FileSelectCallback, View.OnClickListener
                 titleRes = 0
                 value = null
             }
+            Utils.FileType.OVPNB_CONFIG -> {
+                titleRes = 0
+                value = null
+            }
         }
 
         return Pair.create(titleRes, value)

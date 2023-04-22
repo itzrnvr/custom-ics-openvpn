@@ -96,7 +96,8 @@ public class DialogChooseImport extends DialogFragment {
         btnImportBulk.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(getContext(), "Work in progress!", Toast.LENGTH_LONG).show();
+                //Toast.makeText(getContext(), "Work in progress!", Toast.LENGTH_LONG).show();
+                vpnProfileList.startImportBundleFilePicker();
                 dismiss();
             }
         });

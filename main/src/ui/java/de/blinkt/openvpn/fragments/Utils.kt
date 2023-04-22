@@ -90,6 +90,15 @@ object Utils {
                 i.type = "text/plain"
                 supportedMimeTypes.add("text/plain")
             }
+            FileType.OVPNB_CONFIG -> {
+
+                i.type = "application/x-openvpn-profile"
+                supportedMimeTypes.add("application/octet-stream")
+                supportedMimeTypes.add("text/plain")
+                extensions.add("ovpnv")
+
+
+            }
             else -> null
         }
         val mtm = MimeTypeMap.getSingleton()
@@ -222,7 +231,7 @@ object Utils {
         PKCS12(0), CLIENT_CERTIFICATE(1), CA_CERTIFICATE(2), OVPN_CONFIG(3), KEYFILE(4), TLS_AUTH_FILE(
             5
         ),
-        USERPW_FILE(6), CRL_FILE(7);
+        USERPW_FILE(6), CRL_FILE(7), OVPNB_CONFIG(8);
 
         companion object {
             fun getFileTypeByValue(value: Int): FileType? {

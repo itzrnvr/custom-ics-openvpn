@@ -176,6 +176,7 @@ dependencies {
 
 
     // Is there a nicer way to do this?
+    dependencies.add("uiImplementation", "net.lingala.zip4j:zip4j:2.11.5")
     dependencies.add("uiImplementation", "androidx.constraintlayout:constraintlayout:2.1.4")
     dependencies.add("uiImplementation", "org.jetbrains.kotlin:kotlin-stdlib-jdk7:1.7.22")
     dependencies.add("uiImplementation", "androidx.cardview:cardview:1.0.0")
