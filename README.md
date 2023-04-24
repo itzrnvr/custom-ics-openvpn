@@ -13,8 +13,8 @@ What are (.OVPNB) files? These files contain multiple OVPN files bundled togethe
 
 - Fetch the git submodules (the default urls for the submodules work as long as the main repo url is on github):
 
-    - git submodule init
-    - git submodule update
+  - git submodule init
+  - git submodule update
 
 - Build the project using "gradle build" (Or use Android Studio).
   Ensure that the swig executable is the path, otherwise the build will fail.
@@ -31,7 +31,7 @@ What are (.OVPNB) files? These files contain multiple OVPN files bundled togethe
 ##	 NOTES:
 **UIPackage**:
 - VPNProfileList fragment contains the starting point of all the changes related to the bundle imports.
-- BundleReader class inside the core package of the UI catergory handles the decryption and extraction of data from .OVPNB files. The process is self-explanatory.
+- BundleReader class inside the core package of the UI category handles the decryption and extraction of data from .OVPNB files. The process is self-explanatory.
 - Encryption and decryption method used is AES256. It uses a security key to encrypt and decrypt files.
 - The OVPNB files will only work inside JPIPE Client, they are unusable inside other Open VPN clients.
 
