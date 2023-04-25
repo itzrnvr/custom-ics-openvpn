@@ -1,12 +1,19 @@
+
 # jPipe an OpenVPN based VPN cient!
 
-## Description
+### Description
 
 This project is a fork of the [Android Open-VPN client](https://github.com/schwabe/ics-openvpn) which includes the ability to import (.OVPNB) files.
 
 What are (.OVPNB) files? These files contain multiple OVPN files bundled together and encrypted. The B in the end stands for bundle.
 
-## Build instructions:
+### Usage Instructions
+- Click the import profiles button on the action bar of profiles fragment.
+- Select to choose OVPNB files.
+- Locate the files and import them.
+- The app will automatically decrypt, extract and load the config files one by one.
+
+### Build instructions:
 
 - Install sdk, ndk, cmake (e.g. with Android studio), swig (3.0+), on
   Windows perl might be needed for mbedtls
@@ -29,7 +36,7 @@ What are (.OVPNB) files? These files contain multiple OVPN files bundled togethe
 - **After installing swig, make sure to add Environment Variables and restart your system.**
 
 ##	 NOTES:
-**UIPackage**:
+**UI Package**:
 - VPNProfileList fragment contains the starting point of all the changes related to the bundle imports.
 - BundleReader class inside the core package of the UI category handles the decryption and extraction of data from .OVPNB files. The process is self-explanatory.
 - Encryption and decryption method used is AES256. It uses a security key to encrypt and decrypt files.
