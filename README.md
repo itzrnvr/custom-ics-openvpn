@@ -1,5 +1,5 @@
 
-# jPipe an OpenVPN based VPN cient!
+# jPipe an OpenVPN based VPN client!
 
 ### Description
 
