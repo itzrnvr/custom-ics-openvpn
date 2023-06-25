@@ -5,7 +5,7 @@
     package="de.blinkt.openvpn">
 
     <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" /> 
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
@@ -17,16 +17,16 @@
     <!-- Used to show all apps in the allowed Apps selection,
          this app needs the list the app in the allow/deny apps over the VPN -->
     <uses-permission android:name="android.permission.QUERY_ALL_PACKAGES"
-            tools:ignore="QueryAllPackagesPermission" />
+        tools:ignore="QueryAllPackagesPermission" />
 
-<!--    <queries>-->
-<!--        <intent>-->
-<!--            <action android:name="android.intent.action.GET_CONTENT" />-->
-<!--        </intent>-->
-<!--        <intent>-->
-<!--            <action android:name="android.intent.action.ACTION_OPEN_DOCUMENT" />-->
-<!--        </intent>-->
-<!--    </queries>-->
+    <!--    <queries>-->
+    <!--        <intent>-->
+    <!--            <action android:name="android.intent.action.GET_CONTENT" />-->
+    <!--        </intent>-->
+    <!--        <intent>-->
+    <!--            <action android:name="android.intent.action.ACTION_OPEN_DOCUMENT" />-->
+    <!--        </intent>-->
+    <!--    </queries >-->
 
 
     <application
@@ -34,7 +34,8 @@
         android:allowBackup="true"
         android:appCategory="productivity"
         android:extractNativeLibs="true"
-        android:icon="@drawable/ic_launcher"
+        android:icon="@mipmap/ic_launcher"
+        android:roundIcon="@mipmap/ic_launcher_round"
         android:label="jPIPE"
         android:supportsRtl="true"
         android:theme="@style/blinkt"
@@ -68,7 +69,7 @@
             android:name=".api.ExternalOpenVPNService"
             android:process=":openvpn"
             android:exported="true"
-                tools:ignore="ExportedService">
+            tools:ignore="ExportedService">
             <intent-filter>
                 <action android:name="de.blinkt.openvpn.api.IOpenVPNAPIService" />
             </intent-filter>
@@ -79,20 +80,20 @@
             android:process=":openvpn" />
 
         <activity android:name=".api.GrantPermissionsActivity"
-                android:exported="true">
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
             </intent-filter>
         </activity>
         <activity android:name=".api.ConfirmDialog"
-                android:exported="true">
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
             </intent-filter>
         </activity>
 
         <receiver android:name=".OnBootReceiver"
-                android:exported="true">
+            android:exported="true">
             <intent-filter android:priority="999">
                 <action android:name="android.intent.action.BOOT_COMPLETED" />
                 <action android:name="android.intent.action.MY_PACKAGE_REPLACED" />
@@ -133,13 +134,13 @@
             android:exported="true"
             android:targetActivity=".api.RemoteAction" />
         <activity-alias
-                android:name=".api.PauseVPN"
-                android:exported="true"
-                android:targetActivity=".api.RemoteAction" />
+            android:name=".api.PauseVPN"
+            android:exported="true"
+            android:targetActivity=".api.RemoteAction" />
         <activity-alias
-                android:name=".api.ResumeVPN"
-                android:exported="true"
-                android:targetActivity=".api.RemoteAction" />
+            android:name=".api.ResumeVPN"
+            android:exported="true"
+            android:targetActivity=".api.RemoteAction" />
 
     </application>
 
