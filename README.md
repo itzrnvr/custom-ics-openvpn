@@ -14,7 +14,7 @@ What are (.OVPNB) files? These files contain multiple OVPN files bundled togethe
 - The app will automatically decrypt, extract and load the config files one by one.
 
 ### Build instructions:
-test1
+
 - Install sdk, ndk, cmake (e.g. with Android studio), swig (3.0+), on
   Windows perl might be needed for mbedtls
 
